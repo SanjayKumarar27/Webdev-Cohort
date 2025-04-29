@@ -98,7 +98,7 @@ const fs = require("fs");//import the fs library(fs is an object )
 // // console.log("expenseve operation done");
 // console.log(c);
 
-// any function uses refile,fetch, database calls,settimeout;
+// // any function uses refile,fetch, database calls,settimeout;
 
 
 // console.log("Hi!");
@@ -107,7 +107,7 @@ const fs = require("fs");//import the fs library(fs is an object )
 //     console.log("Click the button");
 // }
 
-// setTimeout(timeout, 100);
+// setTimeout(timeout, 10);
 
 // console.log("Welcome to loupe.");
 
