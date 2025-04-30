@@ -4,6 +4,9 @@
 //      this.height = height;
 //      this.color = color; 
 //   }
+
+const { readFile } = require("node:fs/promises");
+
   
 //   area() {
 //     const area = this.width * this.height;
@@ -185,29 +188,148 @@
     //     this.resolve = callback;
     //   }
     // }
-    function readTheFile(resolve){
+    // function readTheFile(resolve){
 
-      console.log("readTheFile called");
+    //   console.log("readTheFile called");
       
-      setTimeout(function(){
-        console.log("callback based setTimeout complete");
-        resolve();
-      },3000);
-    }
+    //   setTimeout(function(){
+    //     console.log("callback based setTimeout complete");
+    //     resolve();
+    //   },3000);
+    // }
 
-    function setTimeoutPromisified(){
-      return new Promise2(readTheFile);
+    // function setTimeoutPromisified(){
+    //   return new Promise2(readTheFile);
       
-    }
+    // }
 
-    let p=setTimeoutPromisified();
+    // let p=setTimeoutPromisified();
 
-    function callback(){
-      console.log("callback has been called");
-    }
+    // function callback(){
+    //   console.log("callback has been called");
+    // }
 
-    p.then(callback);
+    // p.then(callback);
+
+    // Assignment
+    // Write code that
+    // logs hi after 1 second
+    // logs hello 3 seconds after step 1
+    // logs hello there 5 seconds after step 2
+    // function setTimeoutPromisified(ms) {
 
 
+
+// function setTimeoutPromisified(duration){
+//   return new Promise(function (resolve){
+//     setTimeout(resolve,duration);
+//   });
+// }
+
+// // the async await is  a syntactic sugar which make asynchrouns code look like synchronous code  
+// async function solve(){
+//   await setTimeoutPromisified(1000);
+//   console.log("hi");
+//   await setTimeoutPromisified(3000);
+//   console.log("hello");
+//   await setTimeoutPromisified(5000);
+//   console.log("hi there");
+// }
+
+// solve();
+
+// console.log("after solve");
+//callback hell type promissified
+// Promise Chaining 
+// setTimeoutPromisified(1000).then(function(){
+//   console.log("hi");
+//   setTimeoutPromisified(3000).then(function(){
+//     console.log("hello");
+//     setTimeoutPromisified(5000).then(function(){
+//       console.log("hi there");
+//     });
+//   });
+// }); 
+
+
+// chaing function calls in the promice
+
+// setTimeoutPromisified(1000).then(function(){
+//   console.log("hi");
+//   return setTimeoutPromisified(3000);
+// }).then(function(){
+//   console.log("hello");
+//   return setTimeoutPromisified(5000);
+// }).then(function(){
+//   console.log("hit there");
+// });
+
+// what is callback hell 
+
+
+// setTimeout(function (){
+//   console.log("hi");
+//   setTimeout(function(){
+//     console.log("hello");
+//     setTimeout(function(){
+//       console.log("hello There");
+//     },5000);
+//   },3000);
+// },1000);
+
+// console.log("outside the callback")
+
+
+
+// Write a function that
+// Reads the contents of a file
+// Trims the extra space from the left and right
+// Writes it back to the file
+// const fs=require("fs");
+
+// function cleanfile(example)
+// {
+//   fs.readFile(example,'utf-8',(err,data)=>{
+//     if(err){
+//       console.log(err);
+//     }
+//     // console.log(data);
+//     let trimdata=data.trim();
+
+//     fs.writeFile(example,trimdata,(err)=>{
+//       if(err){
+//         console.log(err);
+//       }
+//       console.log("file is trimed");
+//     })
+//   });
+
+// }
+
+// cleanfile('a.txt');
+
+// // console.log('a.txt');
+//any function returning promice can resolve or reject
+const fs=require("fs");
+const { resolve } = require("node:path");
+
+function readFileAsync(){
+  return new Promise(function(resolve,reject){
+    fs.readFile("a.txt","utf-8",function(err,data){
+      if(err){
+        reject("File not found");
+      }else{
+        resolve(data);
+      }
+    });
+  });
+}
+
+
+readFileAsync().then((data)=>{
+  console.log("file has been read",data);
+}).catch(function(e){
+  console.log(e);
+})
 
 
