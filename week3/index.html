@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="todo1">Todo List</h1>
+
+    <h4 class="todo">1. Take class</h4>
+    <h4 class="todo">2. Go out to eat</h4>
+
+    <input type="text">
+    <button onclick="addtodo()">Add todo</button>
+    <script>
+        
+        let cnt=0;
+        function st(){
+            document.querySelectorAll(".todo")[1].innerHTML=cnt;
+            cnt++;
+        }
+        setInterval(st,1000);
+    </script>
+</body>
+    
+
+</html>
