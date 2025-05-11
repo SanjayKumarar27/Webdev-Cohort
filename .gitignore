@@ -1,3 +1,2 @@
-.vscode
-.D:\Webdev-Cohort\week4\week4.2\node_modules
-.D:\Webdev-Cohort\week4\node_modules
+node_modules/
+.vscode/
