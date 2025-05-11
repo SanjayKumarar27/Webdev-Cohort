@@ -11,12 +11,16 @@ const app = express()
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World')
+        // if we want to extract  body we use req
+        // res sends the response to the client 
+  res.send('Hello World')// can add a htm here
 })
 
 app.post('/', (req, res) => {
     res.send('Hello World')
   })
+
+
 app.get('/asd', (req, res) => {
     res.send('Hello World')
   })
