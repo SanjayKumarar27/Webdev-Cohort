@@ -1,6 +1,8 @@
 const express=require("express");
 const jwt=require("jsonwebtoken");
 const mongoose=require("mongoose");
+const bcrypt=require("bcrypt");
+const {z}=require("zod");
 
 const JWT_SECRECT="Thistopsecrect";
 
@@ -13,13 +15,31 @@ const app=express();
 app.use(express.json());
 
 app.post("/signup",async function(req,res){
+    
+    const Requiredbody=z.object({
+        email:z.string().min(5).max(100).email(),
+        password:z.string().min(8).max(50),
+        name:z.string().min(3).max(100)
+    })
+
+    const parsedbody=Requiredbody.safeParse(req.body);
+
+    if(!parsedbody.success){
+        res.json({
+            message:"Incorrect Format"
+        })
+    }
+    
     const email=req.body.email;
     const password=req.body.password;
     const name=req.body.name;
+    
+    const hashedpassword=await bcrypt.hash(password,5);
+    console.log(hashedpassword);
 
     await UserModel.create({
         email:email,
-        password:password,
+        password:hashedpassword,
         name:name   
     })
 
@@ -33,15 +53,22 @@ app.post("/signin",async function(req,res){
     const email=req.body.email;
     const password=req.body.password;
 
-    const user=await UserModel.findOne({
-        email:email,
-        password:password
+    const response=await UserModel.findOne({
+        email:email
     })
 
-    console.log(user);
-    if(user){
+    if(!response){
+        res.json({
+            message:"User does not exits"
+        })
+        return
+    }
+
+    const passwordMatch=await bcrypt.compare(password, response.password);
+
+    if(passwordMatch){
         const token=jwt.sign({
-            id:user._id.toString()
+            id:response._id.toString()
         },JWT_SECRECT);
         res.json({
             token:token
