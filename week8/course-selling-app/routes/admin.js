@@ -1,13 +1,15 @@
 const {Router}=require("express");
-const {AdminModel}=require("../db")
+const {AdminModel,CourseModel}=require("../db")
 const jwt=require("jsonwebtoken");
 const {z}=require("zod");
-const bcrypt= require("bcrypt")
-require("dotenv").config();
+const bcrypt= require("bcrypt");
+require('dotenv').config();
+const {adminMiddelware}=require("../middelware/admin");
+const admin = require("../middelware/admin");
 
-const jwtadmin=process.env.JWT_ADMIN_SCERECT
-
-
+const jwtadmin=process.env.JWT_ADMIN_SCERECT;
+// 68710d4ded6712ffc0fe3d26
+console.log(jwtadmin)
 const AdminRouter=Router();
 
 const AdminScehma=z.object({
@@ -103,15 +105,55 @@ AdminRouter.post("/signin",async function(req,res){
     }
 })
 
-AdminRouter.post("/course",adminMiddelware,function(req,res){
+AdminRouter.post("/course",adminMiddelware,async function(req,res){
+    const adminId=req.adminId;
+
+    const {title,description,price,imageUrl,createrId}=req.body
+    const course=await CourseModel.create({
+        title,
+        description,
+        price,
+        imageUrl,
+        createrId:adminId
+    })
+    res.json({
+        message:"Course Added",
+        courseId:course._id
+    })
+})
+
+AdminRouter.put("/course",adminMiddelware,async function(req,res){
+    const adminId=req.adminId;
+
+    const {title,description,price,imageUrl,courseId}=req.body;
+    const course=await CourseModel.updateOne({
+        _id:courseId,
+        createrId:adminId
+    },{
+        title,
+        description,
+        price,
+        imageUrl
+    })
+
+    res.json({
+        message:"Course Updated",
+        courseId:course._id
+    })
 
 })
 
-AdminRouter.put("/course",function(req,res){
+AdminRouter.get("/course/bluk",adminMiddelware,async function(req,res){
+    const adminId=req.adminId;
 
-})
+    const courses=await CourseModel.find({
+        createrId:adminId
+    })
 
-AdminRouter.get("/course/bluk",function(req,res){
+    res.json({
+        message:"The list of are",
+        courses
+    })
 
 })
 

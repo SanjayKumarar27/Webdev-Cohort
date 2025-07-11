@@ -7,6 +7,7 @@ require("dotenv").config();
 
 
 const jwtuser=process.env.JWT_USER_SECRECT;
+// console.log(jwtuser);
 const UserRouter=Router();
 
 const UserScehma=z.object({

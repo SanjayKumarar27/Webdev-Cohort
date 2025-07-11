@@ -1,5 +1,5 @@
 const {Router}=require("express");
-
+require("dotenv").config();
 const CourseRouter=Router();
 
 CourseRouter.post("/purchase",function(req,res){
