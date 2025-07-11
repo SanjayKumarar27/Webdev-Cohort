@@ -1,7 +1,7 @@
 const {z, email}=require("zod");
 const bcrypt=require("bcrypt");
 const {Router}=require("express");
-const {UserModel}=require("../db");
+const {UserModel, PurchaseModel,CourseModel}=require("../db");
 const jwt=require("jsonwebtoken");
 require("dotenv").config();
 
@@ -101,9 +101,17 @@ UserRouter.post("/signin", async function (req, res) {
         })
     }
 });
-UserRouter.get("/userpurchases", function (req, res) {
+UserRouter.get("/purchases",async function (req, res) {
+    const userId=req.userId;
+    const purchase=await PurchaseModel.find({
+        userId
+    })
+     const courseData=await CourseModel.find({
+        _id:{$in:purchase.map(x => x.courseId)}
+    })
     res.json({
-    msg: "Your are signed Up"
+        purchase,
+        courseData
     })
 })
 

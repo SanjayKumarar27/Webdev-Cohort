@@ -8,7 +8,7 @@ const {adminMiddelware}=require("../middelware/admin");
 const admin = require("../middelware/admin");
 
 const jwtadmin=process.env.JWT_ADMIN_SCERECT;
-// 68710d4ded6712ffc0fe3d26
+//  
 console.log(jwtadmin)
 const AdminRouter=Router();
 
