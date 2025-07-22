@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { useRef } from "react";
 
 // import {BrowserRouter,Routes,Route,Link,useNavigate,Outlet} from "react-router-dom";
@@ -94,31 +94,93 @@ import { useRef } from "react";
 // export default App;
 
 //clock using useref having stop and stop functionality which doesnot trigger the rerender 
-function App(){
-  const [count,Setcount]=useState(1);
+// function App(){
+//   const [count,Setcount]=useState(1);
 // we cannot use let variables here as they get reinitialsied every time the component rerenders so its a bad idea to use let or const varidale
 //  in a react component unless its serves it function
 // we can use useState but the rule that useState is used to only for the components that are rendered in the 
 // dom which doesnot make sense 
 // here useref make sense were we have to store a value and which does not triggger the rereder and gett affeted bay this 
 
-  const timer=useRef();
+//   const timer=useRef();
 
-function startimer(){
-   let value= setInterval(() => {
-      Setcount(c=>c+1);
-    }, 1000);
-    timer.current=value;
-  }
-  function stoptimer(){
-    clearInterval(timer.current);
+// function startimer(){
+//    let value= setInterval(() => {
+//       Setcount(c=>c+1);
+//     }, 1000);
+//     timer.current=value;
+//   }
+//   function stoptimer(){
+//     clearInterval(timer.current);
+//   }
+//   return <div>
+//     {count}
+//     <br /><br />
+//     <button onClick={startimer}>Start</button>
+//     <button onClick={stoptimer}>Stop</button>
+//   </div>
+// }
+
+// export default App;
+
+
+//.........................................................................................................
+// state mamagement in REact for making large projects in React
+//using light bulb example
+
+
+
+//here the BulbOn is a prop for the BulbState componaent 
+  //here the  SetBulbOn is a prop for the ToggleBulbState componaent
+  
+  // /learing about prop drilling ie passing prop through multiple componente
+  // to solve this problem we use Contex api help to solve above poblem b
+  // in 3 steps
+  // 1. creating a context variable outside th component 
+  // 2. provding the variable with object which need to be passed to other component
+  // 3. using the component
+
+const BulbContext=React.createContext();
+
+function BulbProvider({children}){
+  const [BulbOn,SetBulBOn]=useState(true);
+  return <BulbContext.Provider value={{
+      BulbOn:BulbOn,
+      SetBulBOn:SetBulBOn
+    }}>
+      {children}
+    </BulbContext.Provider>
+}
+function App(){
+  return <div>
+    <BulbProvider>
+    <Light />
+    </BulbProvider>
+  </div>
+}
+
+function Light(){  
+  return <div>
+    <LightBulbs/>
+    < LightSwitch/>
+  </div>
+}
+
+function LightBulbs(){
+  const {BulbOn}=useContext(BulbContext);
+  return <div>
+    {BulbOn ? "Bulb On":"Bulb Off"}
+  </div>
+} 
+
+function LightSwitch(){
+  const {BulbOn,SetBulBOn}=useContext(BulbContext);
+  function switchonoff(){
+      SetBulBOn(!BulbOn);
   }
   return <div>
-    {count}
-    <br /><br />
-    <button onClick={startimer}>Start</button>
-    <button onClick={stoptimer}>Stop</button>
-  </div>
+    <button onClick={switchonoff}>Toggle the Bulb</button>
+    </div>
 }
 
 export default App;
