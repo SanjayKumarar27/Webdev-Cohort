@@ -125,7 +125,7 @@ import { useRef } from "react";
 
 
 //.........................................................................................................
-// state mamagement in REact for making large projects in React
+// state mamagement in REact for making large projects in React USING CONTEXT API
 //using light bulb example
 
 

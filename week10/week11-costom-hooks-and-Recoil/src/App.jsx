@@ -1,7 +1,7 @@
-import { useState,useEffect ,useRef} from "react"
-import './App.css'
-import { useFetch, usePosttitle } from "./hooks/useFetch";
-import { usePrev } from "./hooks/usePrev";
+// import { useState,useEffect ,useRef} from "react"
+// import './App.css'
+// import { useFetch, usePosttitle } from "./hooks/useFetch";
+// import { usePrev } from "./hooks/usePrev";
 // function useCounter(){
 //   const [count,Setcount]=useState(1);
 //   function increaseCount(){
@@ -12,6 +12,8 @@ import { usePrev } from "./hooks/usePrev";
 //     increaseCount:increaseCount
 //   }
 // }
+
+// import { useState } from "react"
 
 // function App(){
 
@@ -121,3 +123,57 @@ import { usePrev } from "./hooks/usePrev";
 // };
 
 // export default useDebounce;
+
+import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
+import './App.css'
+
+
+import { counterAtom } from "./store/atoms/counter";
+
+
+function App(){
+  return <div>
+      <RecoilRoot>
+      <Counter/>
+      </RecoilRoot>
+  
+  </div>
+}
+function Counter(){
+  
+  return <div>
+    <CurrentCount/>
+    <Increase />
+    <Decrease/>
+  </div>
+}
+
+function CurrentCount(){
+  const [count,Setcount]=useRecoilValue(counterAtom);
+  return <div>
+    {count}
+  </div>
+}
+
+
+function Increase(){
+  const [count,Setcount]=useRecoilState(counterAtom);
+  function incre(){
+    Setcount(c=>c+1);
+  }
+  return <div>
+    <button onClick={incre}>Increase</button>
+  </div>
+}
+
+
+function Decrease(){
+  const [count,Setcount]=useRecoilState(counterAtom);
+  function decre(){
+    Setcount(c=>c-1);
+  }
+  return <div>
+    <button onClick={decre}>Decrease</button>
+  </div>
+}
+export default App;
