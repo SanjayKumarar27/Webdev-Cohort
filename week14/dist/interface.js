@@ -5,20 +5,14 @@
 // }){
 //     console.log("Hello "+user.name);
 // }
-// const people:Person={
-//     name:"sanjay",
-//     age:12,
-//     greet(){
-//         return "hai";
-//     }
-// }
-// console.log(people.greet());
-//class which implements a interface 
-class Manager {
-    constructor(name, age) {
-        this.name = name;
-        this.age = age;
+Object.defineProperty(exports, "__esModule", { value: true });
+//using array in type script 
+function LegalList(arr) {
+    const ans = [];
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].age >= 18) {
+            ans.push(arr[i]);
+        }
     }
+    return ans;
 }
-const user = new Manager("sanjay", 23);
-console.log(user);

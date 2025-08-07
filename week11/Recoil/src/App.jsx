@@ -56,7 +56,7 @@
 
 
 //Selector in the recoil 
-//selector is drived state of the atom which can only read atom and only rerender is the derive part of the 
+//selector is drived state of the atom which can only read atom and only rerender if the derive part of the 
 //atom in the selecctor is changed
 import {RecoilRoot, useRecoilValue,useSetRecoilState} from "recoil";
 import { counterAtom, iseven } from "./store/atoms/counter";
