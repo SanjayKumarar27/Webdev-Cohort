@@ -7,11 +7,13 @@ import './App.css'
 
 function App() {
   
-  const [socket,Setsocket]=useState();
+  const [socket,Setsocket]=useState<WebSocket>();
   const inputref=useRef<HTMLInputElement>(null);
 
   function SendMessage(){
     if(!socket){
+      return;
+    }if(!inputref.current){
       return;
     }
     const message=inputref.current.value;
