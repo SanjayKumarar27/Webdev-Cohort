@@ -17,7 +17,7 @@ function App() {
       return;
     }
     const message=inputref.current.value;
-    //@ts-ignore
+    
     socket.send(message);
   }
   useEffect(()=>{
